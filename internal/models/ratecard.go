@@ -16,7 +16,7 @@ type CustomerRatecard struct {
 	RatecardID     int64
 }
 
-// CustomerRatecardByCustomerID gets balance information from DB form customerID and CallerDestinationID
+// CustomerRatecardByCustomerID gets ratecards information from DB form customerID and CallerDestinationID
 func (c CustomerRatecard) CustomerRatecardByCustomerID(id int64, callerid int64) ([]CustomerRatecard, error) {
 	pool := db.GetDB()
 	rows, err := pool.Query("getCustomerRateCard", id, callerid)
@@ -41,7 +41,8 @@ func (c CustomerRatecard) CustomerRatecardByCustomerID(id int64, callerid int64)
 
 	// Any errors encountered by rows.Next or rows.Scan will be returned here
 	if rows.Err() != nil {
-		fmt.Println(err)
+		fmt.Println(rows.Err())
+		return nil, rows.Err()
 	}
 
 	fmt.Println("Article Instance := ", crs)

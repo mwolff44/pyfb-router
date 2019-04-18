@@ -29,7 +29,7 @@ type Rate struct {
 }
 
 // CustomerRateByRatecardID gets rate informations from DB
-func (c Rate) CustomerRateByRatecardID(ratecardID int64, calleeID string, calleeDestinationID int64) (*Rate, error) {
+func (ra Rate) CustomerRateByRatecardID(ratecardID int64, calleeID string, calleeDestinationID int64) (*Rate, error) {
 	r := &Rate{}
 	pool := db.GetDB()
 	if err := pool.QueryRow("getCustomerRate", ratecardID, calleeID, calleeDestinationID).Scan(
@@ -55,6 +55,37 @@ func (c Rate) CustomerRateByRatecardID(ratecardID int64, calleeID string, callee
 	}
 
 	log.Println("models:rate: customer rate : ", r)
+
+	return r, nil
+}
+
+// ProviderRateByRatecardID gets a rate from a ratecardId and Callee number and destination_id
+func (ra Rate) ProviderRateByRatecardID(ratecardID int64, calleeID string, calleeDestinationID int64) (*Rate, error) {
+	r := &Rate{}
+	pool := db.GetDB()
+	if err := pool.QueryRow("getProviderRate", ratecardID, calleeID, calleeDestinationID).Scan(
+		&r.ID,
+		&r.DestnumLengthMap,
+		&r.RatecardID,
+		&r.RateType,
+		&r.RatecardName,
+		&r.RCType,
+		&r.Status,
+		&r.Rate,
+		&r.BlockMinDuration,
+		&r.MinimalTime,
+		&r.InitBlock,
+		&r.Prefix,
+		&r.DestnumLength,
+		&r.DestinationID,
+		&r.CountryID,
+		&r.TypeID,
+		&r.RegionID); err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	log.Println("models:rate: provider rate : ", r)
 
 	return r, nil
 }

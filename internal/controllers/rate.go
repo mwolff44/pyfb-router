@@ -101,6 +101,15 @@ func (b CustomerRateController) CheckCustomerRate(c *gin.Context) {
 
 	// Get rate info
 	l := len(ratecard)
+	if l == 0 {
+		log.Println("No ratecard : END")
+		// if customer ratecard not found for CustomerID and callerDestinationID, end of call
+		c.JSON(404, gin.H{
+			"reason": "No customer ratecard info was found",
+		})
+		return
+	}
+
 	log.Println("nb ratecard : ", l)
 	for k, s := range ratecard {
 		rate := new(models.Rate)
@@ -117,6 +126,7 @@ func (b CustomerRateController) CheckCustomerRate(c *gin.Context) {
 					"reason": "No customer rate info was found",
 				})
 			}
+			return
 		default:
 			c.JSON(500, gin.H{
 				"reason": "Internal server error",

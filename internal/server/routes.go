@@ -21,8 +21,9 @@ func NewRouter() *gin.Engine {
 	v1 := router.Group("v1")
 	{
 
-		// The request responds to a url matching:  /v1/routes?r_uri=33679590000&f_uri=33679590000&customer_id=1
-		//v1.GET("/routes", availableRoutes)
+		// The request responds to a url matching:  /v1/outboundroute?r_uri=33679590000&f_uri=33679590000&customer_id=1&socket=127.0.0.1:5060
+		outboundroute := new(controllers.OutboundRouteController)
+		v1.GET("/outboundroute", outboundroute.AvailableRoutes)
 
 		// The request responds to a url matching:  /v1/balance?customer_id=1
 		balance := new(controllers.BalanceController)
