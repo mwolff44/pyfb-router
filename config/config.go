@@ -1,7 +1,7 @@
 package config
 
 import (
-        "fmt"
+	"log"
 	"path/filepath"
 
 	"github.com/spf13/viper"
@@ -14,15 +14,21 @@ var config *viper.Viper
 func Init(env string) {
 	var err error
 	config = viper.New()
-        config.SetDefault("server.port", "127.0.0.1:8081")
-        config.SetDefault("GIN_MODE", "debug")
+	config.SetDefault("server.port", "127.0.0.1:8081")
+	config.SetDefault("GIN_MODE", "debug")
+	config.SetDefault("POSTGRES_HOST", "postgres")
+	config.SetDefault("POSTGRES_PORT", "5432")
+	config.SetDefault("POSTGRES_DB", "pyfreebilling")
+	config.SetDefault("POSTGRES_USER", "pyfreebilling")
+	config.SetDefault("POSTGRES_PASSWORD", "secret")
 	config.SetConfigType("yaml")
 	config.SetConfigName(env)
 	config.AddConfigPath("../config/")
 	config.AddConfigPath("config/")
+	config.AddConfigPath(".")
 	err = config.ReadInConfig()
 	if err != nil {
-		fmt.Errorf("Fatal error config file: %s \n", err)
+		log.Fatal("error on parsing configuration file")
 	}
 }
 

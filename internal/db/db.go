@@ -6,6 +6,8 @@ import (
 	"github.com/jackc/pgx"
 	"github.com/jackc/pgx/log/log15adapter"
 	log "gopkg.in/inconshreveable/log15.v2"
+
+	"github.com/mwolff44/pyfb-router/config"
 )
 
 // db for pgx Postgresql driver
@@ -17,17 +19,17 @@ var (
 
 // Init configures PG setup
 func Init() {
-	//c := config.GetConfig()
+	config := config.GetConfig()
 	logger := log15adapter.NewLogger(log.New("module", "pgx"))
 
 	var err error
 	connPoolConfig := pgx.ConnPoolConfig{
 		ConnConfig: pgx.ConnConfig{
-			Host:     "127.0.0.1",
-			User:     "uNTVzQUOEszJcfxfaxxLjCSDYYueaOFt",
-			Password: "XwUHE4OfKk0DAAW0zbkSC54IK21oVSz7pZpQZZt6OdVdWZ6gFsNWWcnk9ERxgVqj",
-			Database: "pyfreebilling",
-			Port:     5433,
+			Host:     config.GetString("POSTGRES_HOST"),
+			User:     config.GetString("POSTGRES_USER"),
+			Password: config.GetString("POSTGRES_PASSWORD"),
+			Database: config.GetString("POSTGRES_DB"),
+			Port:     uint16(config.GetInt("POSTGRES_PORT")),
 			Logger:   logger,
 		},
 		MaxConnections: maxDBConnections,
