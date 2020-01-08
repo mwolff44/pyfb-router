@@ -1,0 +1,13 @@
+[Unit]
+Description=PyFb router micro-service
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/install -d -o www-data -g www-data /var/run/pyfb-router
+ExecStart=/usr/bin/pyfb-router --config-file=/etc/pyfb-router/pyfb-router.ini
+PIDFile=/var/run/wazo-router-confd/wazo-router-confd.pid
+WatchdogSec=30s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
