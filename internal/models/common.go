@@ -1,10 +1,14 @@
 package models
 
 // SetCallerID sets the callerId and corresponding headers regarding the GW rules
-func SetCallerID(callerID string, pai bool, ppi bool, pid bool, socket string) (string, string) {
+func SetCallerID(callerID string, pai bool, ppi bool, pid bool, addPlusInCaller bool, socket string) (string, string) {
 	var extraHeaders string
 	// Set callerID regarding GW rules
 
+	// Add + in front of CallerID for outbound call
+	if addPlusInCaller == true {
+		callerID = "+" + callerID
+	}
 	// If anonymous
 	// If PAI, set it
 	// RFC 3325

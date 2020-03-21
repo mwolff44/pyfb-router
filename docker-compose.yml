@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pyfb-router:
+    image: pyfb-router
+    build: .
+    ports:
+      - 3000

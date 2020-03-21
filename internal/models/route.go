@@ -36,6 +36,7 @@ type Route struct {
 	Pai                bool
 	Ppi                bool
 	Pid                bool
+	AddPlusInCaller    bool
 	GwPrefix           string
 	SipTransport       string
 	SipPort            int
@@ -112,6 +113,7 @@ func (o Route) OutBoundRouteByCustomerID(customerID int64, calleeID string, call
 			&r.Pai,
 			&r.Ppi,
 			&r.Pid,
+			&r.AddPlusInCaller,
 			&r.GwPrefix,
 			&r.SipTransport,
 			&r.SipPort,

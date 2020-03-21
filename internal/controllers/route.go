@@ -217,7 +217,7 @@ func (o OutboundRouteController) AvailableRoutes(c *gin.Context) {
 	for _, s := range custRoutes {
 		// Handle CallerID rules
 
-		newCallerID, headersExtra := models.SetCallerID(callerNumber, s.Pai, s.Ppi, s.Pid, socket)
+		newCallerID, headersExtra := models.SetCallerID(callerNumber, s.Pai, s.Ppi, s.Pid, s.AddPlusInCaller, socket)
 		fmt.Println("newCallerID :", newCallerID)
 
 		// Handle Callee rules
